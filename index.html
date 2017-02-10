@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>PMN Table-Generator</title>
+    <meta name="author" content="Jared Whalen">
+    <meta content="Create HTML tables with CSV and Google Sheets" />
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/dataTables.bootstrap.css" rel="stylesheet"> -->
+    <link href="css/project.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="wrapper">
+        <p id="heading">PMN: HTML Table Generator Ver. 1.0</p>
+        <p class="bodyText" style="margin-top: -15px;">Use this tool to create searchable, sortable, stylized HTML tables. It can convert a static CSV or Google Sheet into a static html table or a live Google Sheet into a dynamically built html table.<br><br> While the tool can take any number of columns, it is designed to collapse if the container is not wide enough (such as on mobile). For best appearance, keep header titles short and only include needed data fields.
+            <!-- <br />For a more detailed explanation on how to use this tool, <a href="#" target="_blank">view the Knowledge Base post here.</a> --><br><br>Note: This is a web only tool. You cannot use this tool to make tables for the paper.<br><br><em>For help or to report bugs, contact <a href="mailto:jwhalen@philly.com?Subject=List%20Tool" target="_top">Jared Whalen</a>.</em>
+            <hr />
+            <div class="step" id="step-1">
+                <p class="bodyText"><strong>1.</strong> The data in this table is coming from a:
+                    <form id="type-form"> <input type="radio" name="type" value="csv" id="CSV-button" class="type-button"> Static CSV<br> <input type="radio" name="type" value="google" id="Static_Google_Sheet-button" class="type-button"> Static Google Sheet<br>
+                        <input type="radio"
+                            name="type" value="live" id="Live_Google_Sheet-button" class="type-button"> Live Google Sheet </form>
+                </p>
+            </div>
+            <div class="step hidden" id="step-2-csv">
+                <p class="bodyText"><strong>2.</strong>
+                    <div id="dvImportSegments" class="fileupload ">
+                        <fieldset>
+                            <legend class="bodyText">Upload your CSV File</legend> <input type="file" name="File Upload" id="txtFileUpload" accept=".csv" /> </fieldset>
+                    </div>
+            </div>
+            <div class="step hidden" id="step-2-google">
+                <p class="bodyText"><strong>2.</strong> Publish your Google Sheet and submit the link in the field below.
+                    <ol type="a">
+                        <li>To publish your Google Sheet, at the top, click <em><strong>File</strong></em> &rightarrow; <em><strong>Publish to the web</strong></em>.</li>
+                        <li>Click <em><strong>Publish</strong></em>.</li>
+                        <li>Copy the URL and paste it into the field below.</li>
+                    </ol> <img class="instruction-image" src="images/instructions.png" />
+                    <div id="dvImportSegments">
+                        <fieldset>
+                            <legend class="bodyText">Paste your Google Sheets public link</legend><input type="text" value="" id="urlLink"> <input type="submit" id="urlSubmit" value="Submit"> </fieldset>
+                    </div>
+            </div>
+            <div class="step hidden" id="step-3">
+                <p class="bodyText"><strong>3.</strong> Copy and paste the <span>code</span> below into Clickability. <textarea class="textarea" id="html-return"><script alignment="true" src="http://www.philly.com/includes/e32121b31e345f561b84372c2bf06282/jquery-2.0.0b2.js" type="text/javascript" charset="utf-8"></script>
+          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/dataTables.min.js"></script>
+          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/rowReorder.min.js"></script>
+          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/responsive.min.js"></script>
+          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/jquery.csv.min.js"></script>
+          <script alignment="true" >
+          var head = '<head>';
+          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />';
+          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/rowReorder.dataTables.min.css" rel="stylesheet" type="text/css" />';
+          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />';
+          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/table-generator_clicka.css" rel="stylesheet" type="text/css" />';
+          head += '</head>';
+
+          $("body").prepend(head);
+          </script>
+          <style>
+          #table-container,
+          #myTable_wrapper,
+          #myTable {
+              font-family: "Gotham Narrow SSm A", "Gotham Narrow SSm B", "Arial", sans-serif;
+          }
+
+
+            table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+                background-color: #fbece9
+            }
+
+            table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+                background-color: #fbece9
+            }
+            table.dataTable th {
+            text-transform: capitalize;
+          }
+          </style>
+
+          </textarea>
+        </div>
+        <div class="hidden" id="end-buttons">
+          <button id="preview" class="button">Preview table</button>
+          <div id="preview-container"></div>
+          <button id="redo" class="button">Make another table!</button>
+        </div>
+    </div>
+</body>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.csv.min.js"></script>
+<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/dataTables.bootstrap.js"></script>
+<script src='js/project.js'></script>
+</body>
+
+</html>

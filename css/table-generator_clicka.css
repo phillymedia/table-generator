@@ -1,0 +1,26 @@
+#table-container,
+#myTable_wrapper,
+#myTable {
+    font-family: "Gotham Narrow SSm A", "Gotham Narrow SSm B", "Arial", sans-serif;
+}
+
+
+  table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
+      background-color: #fbece9
+  }
+
+  table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
+      background-color: #fbece9
+  }
+  table.dataTable th {
+  text-transform: capitalize;
+}
+  table.dataTable, table.dataTable th, table.dataTable td {border:none}
+
+  .dataTables_wrapper .dataTables_filter input{
+      width: auto;
+      border: 1px solid #CCCCCC;
+      padding: 2px;
+      -webkit-appearance: none;
+      border-radius: 2px;
+  }

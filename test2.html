@@ -1,0 +1,42 @@
+<script>
+    var url = "https://docs.google.com/spreadsheet/pub?key=1wRBi4mhr11kROgV1Zb28mShjiAiEY1DqrffcEuzKfpU&single=true&gid=0&output=csv",
+        xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        var csv = xmlhttp.responseText;
+        var data = $.csv.toArrays(csv, {
+            onParseValue: $.csv.hooks.castToScalar
+        });
+        var html = '<table id="myTable">';
+        $.each(data, function(index, row) {
+            if (index == 0) {
+                html += '<thead>';
+                html += '<tr>';
+                $.each(row, function(index, colData) {
+                    html += '<th>';
+                    html += colData;
+                    html += '</th>';
+                });
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+            } else {
+                html += '<tr>';
+                $.each(row, function(index, colData) {
+                    html += '<td>';
+                    html += colData;
+                    html += '</td>';
+                });
+                html += '</tr>';
+            }
+        });
+        html += '</tbody>';
+        html += '</table>';
+        console.log(html);
+        if (xmlhttp.readyState == 4) {
+            $('#table-container').append(html);
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send(null);
+</script>
+<div id="table-container">&nbsp;</div>
