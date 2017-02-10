@@ -1,36 +1,89 @@
 <script alignment="true" src="http://www.philly.com/includes/e32121b31e345f561b84372c2bf06282/jquery-2.0.0b2.js" type="text/javascript" charset="utf-8"></script>
-          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/dataTables.min.js"></script>
-          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/rowReorder.min.js"></script>
-          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/responsive.min.js"></script>
-          <script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/jquery.csv.min.js"></script>
-          <script alignment="true" >
-          var head = '<head>';
-          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />';
-          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/rowReorder.dataTables.min.css" rel="stylesheet" type="text/css" />';
-          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />';
-          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/table-generator_project.css" rel="stylesheet" type="text/css" />';
-          head += '</head>';
+<script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/dataTables.min.js"></script>
+<script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/rowReorder.min.js"></script>
+<script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/responsive.min.js"></script>
+<script alignment="true" src="http://media.philly.com/storage/inquirer/plugins/dataTables/js/jquery.csv.min.js"></script>
+<script alignment="true">
+    var head = '<head>';
+    head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />';
+    head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/rowReorder.dataTables.min.css" rel="stylesheet" type="text/css" />';
+    head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />';
+    head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/table-generator_project.css" rel="stylesheet" type="text/css" />';
+    head += '</head>';
 
-          $("body").prepend(head);
-          </script>
-          <style>
-          #table-container,
-          #myTable_wrapper,
-          #myTable {
-              font-family: "Gotham Narrow SSm A", "Gotham Narrow SSm B", "Arial", sans-serif;
-          }
+    $("body").prepend(head);
+</script>
+<style>
+    #table-container,
+    #myTable_wrapper,
+    #myTable {
+        font-family: "Gotham Narrow SSm A", "Gotham Narrow SSm B", "Arial", sans-serif;
+    }
 
+    table.dataTable.hover tbody tr:hover,
+    table.dataTable.display tbody tr:hover {
+        background-color: #fbece9
+    }
 
-            table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
-                background-color: #fbece9
+    table.dataTable.hover tbody tr:hover.selected,
+    table.dataTable.display tbody tr:hover.selected {
+        background-color: #fbece9
+    }
+
+    table.dataTable th {
+        text-transform: capitalize;
+    }
+</style>
+
+<script alignment="true">
+    var url = "https://docs.google.com/spreadsheet/pub?key=1kftMqiIu9OJT5Mg-eOfENJSULYhxrWuviD5JDqmoTFg&single=true&gid=0&output=csv",
+        xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        var csv = xmlhttp.responseText;
+        var data = $.csv.toArrays(csv, {
+            onParseValue: $.csv.hooks.castToScalar
+        });
+        var html = '<table id="myTable" class="stripe hover">';
+        $.each(data, function(index, row) {
+            if (index == 0) {
+                html += '<thead>';
+                html += '<tr>';
+                $.each(row, function(index, colData) {
+                    html += '<th>';
+                    html += colData;
+                    html += '</th>';
+                });
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+            } else {
+                html += '<tr>';
+                $.each(row, function(index, colData) {
+                    html += '<td>';
+                    html += colData;
+                    html += '</td>';
+                });
+                html += '</tr>';
             }
-
-            table.dataTable.hover tbody tr:hover.selected, table.dataTable.display tbody tr:hover.selected {
-                background-color: #fbece9
-            }
-            table.dataTable th {
-            text-transform: capitalize;
-          }
-          </style>
-
-          <script alignment="true">var url = "https://docs.google.com/spreadsheet/pub?key=1kftMqiIu9OJT5Mg-eOfENJSULYhxrWuviD5JDqmoTFg&single=true&gid=0&output=csv",xmlhttp = new XMLHttpRequest();xmlhttp.onreadystatechange = function() {var csv = xmlhttp.responseText;var data = $.csv.toArrays(csv, {onParseValue: $.csv.hooks.castToScalar});var html = '<table id="myTable" class="stripe hover">';$.each(data, function(index, row) {if (index == 0) {html += '<thead>';html += '<tr>';$.each(row, function(index, colData) {html += '<th>';html += colData;html += '</th>';});html += '</tr>';html += '</thead>';html += '<tbody>';} else {html += '<tr>';$.each(row, function(index, colData) {html += '<td>';html += colData;html += '</td>';});html += '</tr>';}});html += '</tbody>';html += '</table>';console.log(html);if (xmlhttp.readyState == 4) {$('#table-container').append(html);$('#myTable').DataTable({scrollY:        '50vh',scrollCollapse: true,paging:         false,rowReorder: {selector: 'td:nth-child(2)'},responsive: true,"autoWidth": false});}};xmlhttp.open("GET", url, true);xmlhttp.send(null);</script><div id="table-container" style="width:100%;" > </div>
+        });
+        html += '</tbody>';
+        html += '</table>';
+        console.log(html);
+        if (xmlhttp.readyState == 4) {
+            $('#table-container').append(html);
+            $('#myTable').DataTable({
+                scrollY: '50vh',
+                scrollCollapse: true,
+                paging: false,
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true,
+                "autoWidth": false
+            });
+        }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send(null);
+</script>
+<div id="table-container" style="width:100%;"> </div>

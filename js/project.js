@@ -29,7 +29,7 @@ $(document).ready(function() {
             var data = $.paste.toArrays(paste, {
                 onParseValue: $.paste.hooks.castToScalar
             });
-            var html = '&lt;div id="table-container" style="width:100%;" &gt;';
+            var html = '&lt;div alignment="true" id="table-container" style="width:100%;" &gt;';
                 html += '&lt;table id="myTable" class="stripe hover"&gt;';
             $.each(data, function(index, row) {
                 //bind header
@@ -97,7 +97,7 @@ $(document).ready(function() {
             var data = $.csv.toArrays(csv, {
                 onParseValue: $.csv.hooks.castToScalar
             });
-            var html = '&lt;div id="table-container" style="width:100%;" &gt;';
+            var html = '&lt;div alignment="true" id="table-container" style="width:100%;" &gt;';
                 html += '&lt;table id="myTable" class="stripe hover"&gt;';
             $.each(data, function(index, row) {
                 //bind header
@@ -156,7 +156,7 @@ $(document).ready(function() {
             var data = $.csv.toArrays(csv, {
                 onParseValue: $.csv.hooks.castToScalar
             });
-            var html = '&lt;div id="table-container" style="width:100%;" &gt;';
+            var html = '&lt;div alignment="true" id="table-container" style="width:100%;" &gt;';
             html += '&lt;table id="myTable" class="stripe hover"&gt;';
             $.each(data, function(index, row) {
                 if (index == 0) {
@@ -265,7 +265,7 @@ $(document).ready(function() {
         html += 'xmlhttp.open("GET", url, true);';
         html += 'xmlhttp.send(null);';
         html += '&lt;/script&gt;';
-        html += '&lt;div id="table-container" style="width:100%;" &gt;&nbsp;&lt;/div&gt;';
+        html += '&lt;div alignment="true" id="table-container" style="width:100%;" &gt;&nbsp;&lt;/div&gt;';
         $("#step-3, #end-buttons").show();
         console.log(html);
         $("#html-return").append(html);
