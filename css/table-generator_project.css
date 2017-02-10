@@ -17,6 +17,11 @@
 }
   table.dataTable, table.dataTable th, table.dataTable td {border:none}
 
+.dataTables_wrapper {
+  display: inline-block !important;
+}
+
+
   .dataTables_wrapper .dataTables_filter input{
       width: auto;
       border: 1px solid #CCCCCC;

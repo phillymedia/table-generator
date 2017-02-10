@@ -3,9 +3,11 @@ $(document).ready(function() {
         elemID = this.id;
         elemType = elemID.replace('-button', '');
         $("#type-form").html("<div class='code'><strong>&#10003; " + elemType + " Table</strong></div>")
-        if (elemType === "CSV") {
+        if (elemType === "copy_paste") {
+            $("#step-2-copy_paste").show();
+      } if (elemType === "CSV") {
             $("#step-2-csv").show();
-        } else {
+      } if (elemType === "Static_Google_Sheet" || elemType === "Live_Google_Sheet") {
             $("#step-2-google").show();
         }
     });
@@ -19,6 +21,71 @@ $(document).ready(function() {
         }
         return isCompatible;
     }
+
+
+    // Method that reads and processes the pasted CSV data
+    $("#paste-submit").click(function() {
+            var paste = $('#paste').val();
+            var data = $.paste.toArrays(paste, {
+                onParseValue: $.paste.hooks.castToScalar
+            });
+            var html = '&lt;div id="table-container" style="width:100%;" &gt;';
+                html += '&lt;table id="myTable" class="stripe hover"&gt;';
+            $.each(data, function(index, row) {
+                //bind header
+                if (index == 0) {
+                    html += '&lt;thead&gt;';
+                    html += '&lt;tr&gt;';
+                    $.each(row, function(index, colData) {
+                        html += '&lt;th&gt;';
+                        html += colData;
+                        html += '&lt;/th&gt;';
+                    });
+                    html += '&lt;/tr&gt;';
+                    html += '&lt;/thead&gt;';
+                    html += '&lt;tbody&gt;';
+                } else {
+                    html += '&lt;tr&gt;';
+                    $.each(row, function(index, colData) {
+                        html += '&lt;td&gt;';
+                        html += colData;
+                        html += '&lt;/td&gt;';
+                    });
+                    html += '&lt;/tr&gt;';
+                }
+            });
+            html += '&lt;/tbody&gt;';
+            html += '&lt;/table&gt;';
+            html += '&lt;/div&gt;';
+            html += '&lt;script alignment="true"&gt;';
+            html += '$(document).ready(function() {';
+            html += '$(\'#myTable\').DataTable({';
+            html += 'scrollY:        \'50vh\',';
+            html += 'scrollCollapse: true,';
+            html += 'paging:         false,';
+            html += 'rowReorder: {';
+            html += 'selector: \'td:nth-child(2)\'';
+            html += '},';
+            html += 'responsive: true,';
+            html += '"autoWidth": false';
+            html += '});';
+            html += '});';
+            html += '&lt;/script&gt;';
+            console.log(html);
+            $("#step-3, #end-buttons").show();
+            $('#html-return').append(html);
+});
+
+
+
+
+
+
+
+
+
+
+
     // Method that reads and processes the selected file
     function uploadStatic(evt) {
         var data = null;

@@ -1,3 +1,5 @@
+
+
 output {
     display: block;
     margin-top: 4em;
@@ -72,11 +74,10 @@ output {
             outline: 0;
             padding: 5px;
             margin-top: 5px;
+            height: 200px;
+            resize: none;
         }
-        #html-return {
-          height: 200px;
 
-        }
 
         .small {
             font-size: small;

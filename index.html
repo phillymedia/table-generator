@@ -28,10 +28,16 @@
             <hr />
             <div class="step" id="step-1">
                 <p class="bodyText"><strong>1.</strong> The data in this table is coming from a:
-                    <form id="type-form"> <input type="radio" name="type" value="csv" id="CSV-button" class="type-button"> Static CSV<br> <input type="radio" name="type" value="google" id="Static_Google_Sheet-button" class="type-button"> Static Google Sheet<br>
-                        <input type="radio"
-                            name="type" value="live" id="Live_Google_Sheet-button" class="type-button"> Live Google Sheet </form>
+                    <form id="type-form">
+                      <input type="radio" name="type" value="csv" id="copy_paste-button" class="type-button"> Copy & Pasted Table<br>
+                      <input type="radio" name="type" value="csv" id="CSV-button" class="type-button"> Static CSV<br>
+                      <input type="radio" name="type" value="google" id="Static_Google_Sheet-button" class="type-button"> Static Google Sheet<br>
+                      <input type="radio" name="type" value="live" id="Live_Google_Sheet-button" class="type-button"> Live Google Sheet </form>
                 </p>
+            </div>
+            <div class="step hidden" id="step-2-copy_paste">
+                <p class="bodyText"><strong>2.</strong> Select and copy the cells in the data set, paste it below and press <input type="submit" id="paste-submit" value="Submit"> .
+                <textarea class="textarea" id="paste"></textarea>
             </div>
             <div class="step hidden" id="step-2-csv">
                 <p class="bodyText"><strong>2.</strong>
@@ -63,7 +69,7 @@
           head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />';
           head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/rowReorder.dataTables.min.css" rel="stylesheet" type="text/css" />';
           head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />';
-          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/table-generator_clicka.css" rel="stylesheet" type="text/css" />';
+          head += '<link href="http://media.philly.com/storage/inquirer/plugins/dataTables/css/table-generator_project.css" rel="stylesheet" type="text/css" />';
           head += '</head>';
 
           $("body").prepend(head);
@@ -103,6 +109,7 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.csv.min.js"></script>
+<script src="js/jquery.paste.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.js"></script>
 <script src='js/project.js'></script>
